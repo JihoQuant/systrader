@@ -1,2 +1,4 @@
 django
 pywinauto
+redis
+pyqt5

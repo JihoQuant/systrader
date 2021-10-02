@@ -3,10 +3,7 @@
 import logging
 
 import pythoncom
-import settings
 import win32com.client
-
-import settings
 
 
 logger = logging.getLogger(__name__)
@@ -41,12 +38,13 @@ class XASession(object):
     session = None
 
     @classmethod
-    def login(cls, id, pw, cert=None):
+    def login(cls, id, pw, cert=None, demo=True):
         logger.debug("Trying to log in...")
-        if not settings.DEMO:
+        if not demo:
             server_addr = "hts.etrade.co.kr"
+            server_addr = "hts.ebestsec.co.kr"
         else:
-            server_addr = "demo.etrade.co.kr"
+            server_addr = "demo.ebestsec.co.kr"
 
         try:
             pythoncom.CoInitialize()

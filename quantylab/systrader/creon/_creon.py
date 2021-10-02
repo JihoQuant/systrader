@@ -28,7 +28,8 @@ class Creon:
         self.obj_CpTrade_CpTd0311 = win32com.client.Dispatch('CpTrade.CpTd0311')
         self.obj_CpTrade_CpTd5341 = win32com.client.Dispatch('CpTrade.CpTd5341')
         self.obj_CpTrade_CpTd6033 = win32com.client.Dispatch('CpTrade.CpTd6033')
-        self.obj_Dscbo1_CpConclusion = win32com.client.Dispatch('CpTrade.CpTd6033')
+        self.obj_Dscbo1_CpConclusion = win32com.client.Dispatch('Dscbo1.CpConclusion')
+        self.obj_CpTrade_CpTd0322 = win32com.client.Dispatch('CpTrade.CpTd0322')
         
         # contexts
         self.stockcur_handlers = {}  # 주식/업종/ELW시세 subscribe event handlers
@@ -435,6 +436,30 @@ class Creon:
 
     def sell(self, code, amount):
         return self.order('1', code, amount)
+
+    def order_overtime_close(self, action, code, amount):
+        if not code.startswith('A'):
+            code = 'A' + code
+        account_no, account_gflags = self.init_trade()
+        self.obj_CpTrade_CpTd0322
+        self.obj_CpTrade_CpTd0322.SetInputValue(0, action)  # 1: 매도, 2: 매수
+        self.obj_CpTrade_CpTd0322.SetInputValue(1, account_no)  # 계좌번호
+        self.obj_CpTrade_CpTd0322.SetInputValue(2, account_gflags[0])  # 상품구분
+        self.obj_CpTrade_CpTd0322.SetInputValue(3, code)  # 종목코드
+        self.obj_CpTrade_CpTd0322.SetInputValue(4, amount)  # 매수수량
+        result = self.obj_CpTrade_CpTd0322.BlockRequest()
+        if result != 0:
+            print('order request failed.', file=sys.stderr)
+        status = self.obj_CpTrade_CpTd0322.GetDibStatus()
+        msg = self.obj_CpTrade_CpTd0322.GetDibMsg1()
+        if status != 0:
+            print('order failed. {}'.format(msg), file=sys.stderr)
+    
+    def buy_overtime_close(self, code, amount):
+        return self.order_overtime_close('2', code, amount)
+
+    def sell_overtime_close(self, code, amount):
+        return self.order_overtime_close('1', code, amount)
 
     def get_trade_history(self):
         account_no, account_gflags = self.init_trade()

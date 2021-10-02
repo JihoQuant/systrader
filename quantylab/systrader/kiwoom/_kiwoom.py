@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import QApplication
 import numpy as np
 import pandas as pd
 
-import util
+from quantylab.systrader import util
 
 
 # 상수
@@ -32,13 +32,13 @@ formatter = logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s',
                               datefmt='%Y-%m-%d %H:%M:%S')
 
 # 로그 파일 핸들러
-now = datetime.datetime.now().isoformat()[:10]
-logf = now + ".log"
-logf = os.path.join("logs", logf)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-fh_log = FileHandler(os.path.join(BASE_DIR, logf), encoding='utf-8')
-fh_log.setLevel(logging.DEBUG)
-fh_log.setFormatter(formatter)
+# now = datetime.datetime.now().isoformat()[:10]
+# logf = now + ".log"
+# logf = os.path.join("logs", logf)
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# fh_log = FileHandler(os.path.join(BASE_DIR, logf), encoding='utf-8')
+# fh_log.setLevel(logging.DEBUG)
+# fh_log.setFormatter(formatter)
 
 # stdout handler
 stdout_handler = logging.StreamHandler(sys.stdout)
@@ -47,7 +47,7 @@ stdout_handler.setFormatter(formatter)
 # 로거 생성 및 핸들러 등록
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-logger.addHandler(fh_log)
+# logger.addHandler(fh_log)
 logger.addHandler(stdout_handler)
 
 
