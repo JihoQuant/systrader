@@ -551,9 +551,9 @@ class StockCurEventHandler(EventHandler):
             'cum_trans': self.obj.GetHeaderValue(10),
             'price': self.obj.GetHeaderValue(13),
             'contract_type': self.obj.GetHeaderValue(14),
-            'cum_sellamount': self.obj.GetHeaderValue(15),
-            'buy_sellamount': self.obj.GetHeaderValue(16),
-            'contract_amount': self.obj.GetHeaderValue(17),
+            'cum_sell_volume': self.obj.GetHeaderValue(15),
+            'cum_buy_volume': self.obj.GetHeaderValue(16),
+            'contract_volume': self.obj.GetHeaderValue(17),
             'second': self.obj.GetHeaderValue(18),
             'price_type': chr(self.obj.GetHeaderValue(19)),  # 1: 동시호가시간 예상체결가, 2: 장중 체결가
             'market_flag': chr(self.obj.GetHeaderValue(20)),  # '1': 장전예상체결, '2': 장중, '4': 장후시간외, '5': 장후예상체결
