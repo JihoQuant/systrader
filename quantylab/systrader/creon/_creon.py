@@ -526,6 +526,8 @@ class Creon:
 
 
 class EventHandler:
+    # 실시간 조회(subscribe)는 최대 400건
+
     def set_attrs(self, obj, cb):
         self.obj = obj
         self.cb = cb
