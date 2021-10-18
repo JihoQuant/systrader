@@ -1,3 +1,4 @@
+import sys
 import argparse
 import asyncio
 import json
@@ -14,6 +15,7 @@ logger.setLevel(logging.DEBUG)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--connect', action='store_true', default=False)
     parser.add_argument('--id')
     parser.add_argument('--pwd')
     parser.add_argument('--pwdcert')
@@ -24,7 +26,10 @@ if __name__ == '__main__':
 
     c = Creon()
     if not c.connected():
-        c.connect(args.id, args.pwd, args.pwdcert)
+        if args.connect:
+            c.connect(args.id, args.pwd, args.pwdcert)
+        else:
+            sys.exit(1)
 
     r = redis.get_client()
     def cb(item):
