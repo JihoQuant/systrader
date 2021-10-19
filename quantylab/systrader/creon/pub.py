@@ -10,7 +10,7 @@ from quantylab.common.db import redis
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s %(funcName)s %(levelname)s] %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 if __name__ == '__main__':
@@ -35,7 +35,8 @@ if __name__ == '__main__':
     def cb(item):
         m = json.dumps(item, ensure_ascii=False)
         logger.debug('[stockcur] {}'.format(m))
-        r.publish('stockcur', m)
+        # r.publish('stockcur', m)
+        r.set(m['code'], m)
     stockranks = json.loads(r.get('stockranks'))
     stockranks = stockranks['stockranks']
     codes = [item['code'] for item in stockranks]
