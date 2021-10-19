@@ -21,5 +21,8 @@ for p in output.split('\n\n\n'):
             cmd = v
         elif k == 'ProcessId':
             pid = v
-    if name == 'python.exe' and 'systrader\manage.py runserver' in cmd:
+    if (
+        (name == 'python.exe' and 'quantylab-systrader\manage.py runserver' in cmd)
+        or (name == 'python.exe' and 'quantylab-systrader\quantylab\systrader\creon\pub.py' in cmd)
+    ):
         os.system('wmic process where "processid={pid}" call terminate'.format(pid=pid))
