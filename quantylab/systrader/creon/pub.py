@@ -36,7 +36,7 @@ if __name__ == '__main__':
         m = json.dumps(item, ensure_ascii=False)
         logger.debug('[stockcur] {}'.format(m))
         # r.publish('stockcur', m)
-        r.set(m['code'], m)
+        r.set(item['code'], m)
     stockranks = json.loads(r.get('stockranks'))
     stockranks = stockranks['stockranks']
     codes = [item['code'] for item in stockranks]
