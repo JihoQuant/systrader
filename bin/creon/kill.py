@@ -23,6 +23,8 @@ for p in output.split('\n\n\n'):
             pid = v
     if (
         (name == 'python.exe' and 'quantylab-systrader\manage.py runserver' in cmd)
-        or (name == 'python.exe' and 'quantylab-systrader\quantylab\systrader\creon\pub.py' in cmd)
+        or (name == 'python.exe' and 'quantylab\quantylab\systrader\creon\pub.py' in cmd)
+        or (name == 'cmd.exe' and 'run_bridge.bat' in cmd)
+        or (name == 'cmd.exe' and 'run_pub.bat' in cmd)
     ):
         os.system('wmic process where "processid={pid}" call terminate'.format(pid=pid))
