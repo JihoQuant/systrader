@@ -9,7 +9,7 @@ setup(
     author='Quantylab',
     author_email='quantylab@gmail.com',
     url='https://github.com/quantylab/quantylab-systrader',
-    packages=find_packages(),
+    packages=['quantylab.systrader'],
     install_requires=[
         'django', 'pywinauto'
     ]
