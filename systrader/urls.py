@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from quantylab.systrader.creon import bridge_django
+from systrader import bridge_django
 
 urlpatterns = [
     path('admin/', admin.site.urls),
