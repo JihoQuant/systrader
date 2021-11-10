@@ -14,7 +14,7 @@ from quantylab.systrader import util
 
 
 class Creon:
-    def __init__(self, account_no=''):
+    def __init__(self):
         self.obj_CpUtil_CpCybos = win32com.client.Dispatch('CpUtil.CpCybos')
         self.obj_CpUtil_CpCodeMgr = win32com.client.Dispatch('CpUtil.CpCodeMgr')
         self.obj_CpSysDib_StockChart = win32com.client.Dispatch('CpSysDib.StockChart')
@@ -271,21 +271,21 @@ class Creon:
 
         return result
 
-    def get_balance(self, account_no):
+    def get_balance(self):
         """
         매수가능금액
         """
-        self.obj_CpTrade_CpTdUtil.TradeInit()
+        account_no, account_gflags = self.init_trade()
         self.obj_CpTrade_CpTdNew5331A.SetInputValue(0, account_no)
         self.obj_CpTrade_CpTdNew5331A.BlockRequest()
         v = self.obj_CpTrade_CpTdNew5331A.GetHeaderValue(10)
         return v
 
-    def get_holdingstocks(self, account_no):
+    def get_holdingstocks(self):
         """
         보유종목
         """
-        self.obj_CpTrade_CpTdUtil.TradeInit()
+        account_no, account_gflags = self.init_trade()
         self.obj_CpTrade_CpTdNew5331B.SetInputValue(0, account_no)
         self.obj_CpTrade_CpTdNew5331B.SetInputValue(3, ord('1')) # 1: 주식, 2: 채권
         self.obj_CpTrade_CpTdNew5331B.BlockRequest()
