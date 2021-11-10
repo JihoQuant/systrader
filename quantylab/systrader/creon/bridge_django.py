@@ -120,3 +120,9 @@ def handle_marketcap(request):
     res += c.get_marketcap(target='2')  # 코스피
     res += c.get_marketcap(target='4')  # 코스닥
     return JsonResponse(res, safe=False)
+
+
+def handle_holdingstocks(request):
+    c.wait()
+    res = c.get_holdingstocks()
+    return JsonResponse(res, safe=False)
