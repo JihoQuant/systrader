@@ -6,6 +6,7 @@ import logging
 
 from quantylab.systrader.creon import Creon
 from quantylab.common.db import redis
+from quantylab.common import util
 
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s %(funcName)s %(levelname)s] %(message)s')
@@ -33,6 +34,7 @@ if __name__ == '__main__':
 
     r = redis.get_client()
     def cb(item):
+        item['date'] = util.get_str_today()
         m = json.dumps(item, ensure_ascii=False)
         logger.debug('[stockcur] {}'.format(m))
         # r.publish('stockcur', m)
