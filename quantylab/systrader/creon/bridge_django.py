@@ -124,5 +124,6 @@ def handle_marketcap(request):
 
 def handle_holdingstocks(request):
     c.wait()
-    res = c.get_holdingstocks()
+    account_no = request.GET.get('account_no')
+    res = c.get_holdingstocks(account_no=account_no)
     return JsonResponse(res, safe=False)

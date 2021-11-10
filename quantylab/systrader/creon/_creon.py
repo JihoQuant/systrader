@@ -271,22 +271,22 @@ class Creon:
 
         return result
 
-    def get_balance(self, account):
+    def get_balance(self, account_no):
         """
         매수가능금액
         """
         self.obj_CpTrade_CpTdUtil.TradeInit()
-        self.obj_CpTrade_CpTdNew5331A.SetInputValue(0, account)
+        self.obj_CpTrade_CpTdNew5331A.SetInputValue(0, account_no)
         self.obj_CpTrade_CpTdNew5331A.BlockRequest()
         v = self.obj_CpTrade_CpTdNew5331A.GetHeaderValue(10)
         return v
 
-    def get_holdingstocks(self, account):
+    def get_holdingstocks(self, account_no):
         """
         보유종목
         """
         self.obj_CpTrade_CpTdUtil.TradeInit()
-        self.obj_CpTrade_CpTdNew5331B.SetInputValue(0, account)
+        self.obj_CpTrade_CpTdNew5331B.SetInputValue(0, account_no)
         self.obj_CpTrade_CpTdNew5331B.SetInputValue(3, ord('1')) # 1: 주식, 2: 채권
         self.obj_CpTrade_CpTdNew5331B.BlockRequest()
         cnt = self.obj_CpTrade_CpTdNew5331B.GetHeaderValue(0)
