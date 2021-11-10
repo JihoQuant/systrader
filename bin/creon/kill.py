@@ -22,8 +22,8 @@ for p in output.split('\n\n\n'):
         elif k == 'ProcessId':
             pid = v
     if (
-        (name == 'python.exe' and 'quantylab-systrader\manage.py runserver' in cmd)
-        or (name == 'python.exe' and 'quantylab\quantylab\systrader\creon\pub.py' in cmd)
+        (name == 'python.exe' and 'systrader\manage.py runserver' in cmd)
+        or (name == 'python.exe' and 'systrader\creon\pub.py' in cmd)
         or (name == 'cmd.exe' and 'run_bridge.bat' in cmd)
         or (name == 'cmd.exe' and 'run_pub.bat' in cmd)
     ):
