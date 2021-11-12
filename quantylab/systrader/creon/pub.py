@@ -1,4 +1,3 @@
-import sys
 import argparse
 import asyncio
 import json
@@ -26,11 +25,11 @@ if __name__ == '__main__':
     asyncio.set_event_loop(loop)
 
     c = Creon()
-    if not c.connected():
-        if args.connect:
-            c.connect(args.id, args.pwd, args.pwdcert)
-        else:
-            sys.exit(1)
+    # if not c.connected():
+    #     if args.connect:
+    #         c.connect(args.id, args.pwd, args.pwdcert)
+    #     else:
+    #         sys.exit(1)
 
     r = redis.get_client()
     def cb(item):
