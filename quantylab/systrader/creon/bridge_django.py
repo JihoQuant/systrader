@@ -126,3 +126,15 @@ def handle_holdingstocks(request):
     c.wait()
     res = c.get_holdingstocks()
     return JsonResponse(res, safe=False)
+
+
+def handle_holdings(request):
+    c.wait()
+    res = c.get_holdings()
+    return JsonResponse(res, safe=False)
+
+
+def handle_balance(request):
+    c.wait()
+    res = c.get_balance()
+    return JsonResponse(res, safe=False)

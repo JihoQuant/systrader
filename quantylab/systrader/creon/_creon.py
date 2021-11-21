@@ -478,7 +478,7 @@ class Creon:
         result = self.request(self.obj_CpTrade_CpTd5341, dict(zip(_fields, _keys)), cntidx=6)
         return result
 
-    def get_balance(self):
+    def get_holdings(self):
         """
         0 - (string) 계좌번호
         1 - (string) 상품관리구분코드
