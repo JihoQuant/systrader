@@ -10,6 +10,6 @@ setup(
     # packages=find_packages(exclude=['quantylab', 'systrader']),
     packages=find_namespace_packages(include=['quantylab.*']),
     install_requires=[
-        'django', 'pywinauto'
+        'django', 'pywinauto',
     ]
 )
