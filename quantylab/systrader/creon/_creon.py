@@ -252,7 +252,9 @@ class Creon:
                 dict_item[k] = int(dict_item[k])
 
             # additional fields
-            dict_item['diffratio'] = (dict_item['diff'] / (dict_item['close'] - dict_item['diff'])) * 100
+            # 비정상인 상황이지만 dict_item['close'] - dict_item['diff']가 0이 될 수 있다.
+            # 이런 경우 diffratio를 100%로 정해서 추후에 대응할 수 있게 한다.
+            dict_item['diffratio'] = (dict_item['diff'] / (dict_item['close'] - dict_item['diff'])) * 100 if dict_item['close'] > dict_item['diff'] else 100
         
         return result
 
