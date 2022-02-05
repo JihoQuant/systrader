@@ -33,6 +33,7 @@ class Creon:
         
         # contexts
         self.stockcur_handlers = {}  # 주식/업종/ELW시세 subscribe event handlers
+        self.stockbid_handlers = {}  # 주식/ETF/ELW 호가, 호가잔량 subscribe event handlers
         self.orderevent_handler = None
 
     def connect(self, id_, pwd, pwdcert, trycnt=300):
@@ -394,6 +395,34 @@ class Creon:
             obj.Unsubscribe()
             del self.stockcur_handlers[code]
 
+    def subscribe_stockbid(self, code, cb):
+        # https://money2.creontrade.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=285&seq=16&page=3&searchString=%EC%8B%A4%EC%8B%9C%EA%B0%84&p=&v=&m=
+        if not code.startswith('A'):
+            code = 'A' + code
+        if code in self.stockbid_handlers:
+            return
+        obj = win32com.client.Dispatch('Dscbo1.StockJpBid')
+        obj.SetInputValue(0, code)
+        handler = win32com.client.WithEvents(obj, StockBidEventHandler)
+        handler.set_attrs(obj, cb)
+        self.stockbid_handlers[code] = obj
+        obj.Subscribe()
+
+    def unsubscribe_stockbid(self, code=None):
+        lst_code = []
+        if code is not None:
+            if not code.startswith('A'):
+                code = 'A' + code
+            if code not in self.stockbid_handlers:
+                return
+            lst_code.append(code)
+        else:
+            lst_code = list(self.stockbid_handlers.keys()).copy()
+        for code in lst_code:
+            obj = self.stockbid_handlers[code]
+            obj.Unsubscribe()
+            del self.stockbid_handlers[code]
+
     def subscribe_orderevent(self, cb):
         # https://money2.creontrade.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=285&seq=16&page=3&searchString=%EC%8B%A4%EC%8B%9C%EA%B0%84&p=&v=&m=
         obj = win32com.client.Dispatch('Dscbo1.CpConclusion')
@@ -570,6 +599,21 @@ class StockCurEventHandler(EventHandler):
             '누적매도체결수량(호가방식)':self.obj.GetHeaderValue(27),
             '누적매수체결수량(호가방식)':self.obj.GetHeaderValue(28),
         }
+        self.cb(item)
+
+
+class StockBidEventHandler(EventHandler):
+    def OnReceived(self):
+        item = {
+            'code': self.obj.GetHeaderValue(0),
+            'total_offer': self.obj.GetHeaderValue(23),
+            'total_bid': self.obj.GetHeaderValue(24),
+        }
+        for i in range(10):
+            item[f'offer_{i+1}'] = self.obj.GetHeaderValue(3 + i)
+            item[f'bid_{i+1}'] = self.obj.GetHeaderValue(3 + i + 1)
+            item[f'offer_volume_{i+1}'] = self.obj.GetHeaderValue(3 + i + 2)
+            item[f'bid_volume_{i+1}'] = self.obj.GetHeaderValue(3 + i + 3)
         self.cb(item)
 
 
